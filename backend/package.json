@@ -1,0 +1,29 @@
+{
+  "name": "todolist-backend",
+  "version": "1.0.0",
+  "description": "Todo list backend, being an API to connect to database (mongodb)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "local": "nodemon server.js",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "jest"
+  },
+  "author": "Pedro Carmo",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.18"
+  },
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7"
+  }
+}
