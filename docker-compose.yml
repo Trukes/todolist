@@ -1,34 +1,47 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db-nosql:
     container_name: todolist_mongo
     image: mongo
-    ports:
-     - "9094:27017"
-    
+    # ports:
+    # - "9094:27017"
+
   db-nosql-express:
     container_name: todolist_mongo_express
     image: mongo-express
     ports:
-     - "9095:8081"
+      - "9076:8081"
     environment:
       - ME_CONFIG_MONGODB_SERVER=db-nosql
-
-
 
   backend:
     container_name: todolist_backend
     build:
       context: ./backend
-      dockerfile: ./backend/Dockerfile
+      dockerfile: ./Dockerfile
     volumes:
-      - '/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - "/usr/src/app"
+      - "/usr/src/app/node_modules"
     ports:
-      - '8280:8081'
+      - "9077:8081"
+    links:
+      - db-nosql
     environment:
       - BACKEND_PORT=8081
       - SALT_HASH=10
       - JWT_SECRET="pmcarmo_secret_key"
-      - MONGO_CONNECTOR=mongodb://URL/todolist
+      - MONGO_CONNECTOR=mongodb://db-nosql:27017/todolist
+
+  frontend:
+    container_name: todolist_frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    volumes:
+      - "/usr/src/app"
+      - "/usr/src/app/node_modules"
+    ports:
+      - "9078:80"
+    links:
+      - backend
